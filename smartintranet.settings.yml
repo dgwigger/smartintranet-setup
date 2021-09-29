@@ -1,0 +1,12 @@
+github:
+  baseUrl: https://github.com/bee365ag/smartintranet-setup
+  packages:
+    smartintranet-webparts:
+      name: smartintranet-webparts-client-side-solution
+    beeessentials:
+      name: beeessentials-client-side-solution
+
+
+
+
+

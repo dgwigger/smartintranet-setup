@@ -1,0 +1,9 @@
+Tenant: <%= $Tenant %>
+
+# Sharepoint Specific Settings
+SharePoint:
+  AdminUrl: https://<%= $Tenant %>-admin.sharepoint.com
+  AdminUpn: <%= $AdminUpn %>
+  Url: https://<%= $Tenant %>.sharepoint.com
+  PortalSite: <%= Get-OrElse $PortalSite "sites/beeConnect" %>
+  PortalTitle: <%= Get-OrElse $PortalTitle "Intranet Home" %>
