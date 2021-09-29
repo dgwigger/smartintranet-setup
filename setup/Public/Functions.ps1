@@ -63,17 +63,23 @@ function Grant-ServicePrincipalPermissionsInTenant() {
         }
     }
 }
+
 function New-SmartIntranet() {
     $tenantConfig = Get-TenantConfig -Tenant $Tenant  
     Write-Output "> CREATING new beeConnect Site Collection: $($tenantConfig.SharePoint.PortalSite)"
     $siteUrl = "$($tenantConfig.SharePoint.Url)/$($tenantConfig.SharePoint.PortalSite)"
-    New-PnPSite -Type CommunicationSite -Title $tenantConfig.SharePoint.PortalTitle  -Url $siteUrl`
-                -SiteDesign Blank -Wait -Lcid 1031 -Connection $global:BcAdminConnection -ErrorAction
+    New-PnPTenantSite -Url $siteUrl -Owner $tenantConfig.SharePoint.AdminUpn -Title $tenantConfig.SharePoint.PortalTitle -Template "SITEPAGEPUBLISHING#0" -Timezone 4 -LCID 1031 `
+                    -Wait -ErrorAction SilentlyContinue -Connection $global:BcAdminConnection
     $site = Get-PnPTenantSite -Identity $siteUrl -Connection $global:BcAdminConnection -ErrorAction $ErrorActionPreference
         
     # Set Org News Site
-    Write-Output "> SETTING UP AS ORG NEWS SITE (authoriative)"
+    Write-Output "`n> SETTING UP AS ORG NEWS SITE (authoriative)"
     Add-PnPOrgNewsSite -OrgNewsSiteUrl $site.Url -Connection $global:BcAdminConnection
+
+    # Set Hub Site
+    Write-Output "> SETTING UP AS HUB SITE"
+    Register-PnPHubSite -Site $site.Url -Connection $global:BcAdminConnection
+    Set-PnPHubSite -Identity $site.Url -Title $tenantConfig.SharePoint.PortalTitle -EnablePermissionsSync -HideNameInNavigation -Connection $global:BcAdminConnection
 
     # Provision Content
     Write-Output "> PROVISIONING CONTENT"
