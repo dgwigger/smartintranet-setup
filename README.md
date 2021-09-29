@@ -11,7 +11,7 @@ Install-Module -Name CredentialManager -Scope CurrentUser
 ...or...
 
 ```powershell
-Install-Module -Name üowershell-yaml, PnP.PowerShell, CredentialManager -Scope CurrentUser
+Install-Module -Name powershell-yaml, PnP.PowerShell, CredentialManager -Scope CurrentUser
 ```
 
 ## Usage
