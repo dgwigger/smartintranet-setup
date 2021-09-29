@@ -3,6 +3,7 @@
 ## Prerequisites
 
 ```powershell
+Install-Module -Name EPS -Scope CurrentUser
 Install-Module -Name powershell-yaml -Scope CurrentUser
 Install-Module -Name PnP.PowerShell -Scope CurrentUser
 Install-Module -Name CredentialManager -Scope CurrentUser
@@ -11,7 +12,7 @@ Install-Module -Name CredentialManager -Scope CurrentUser
 ...or...
 
 ```powershell
-Install-Module -Name powershell-yaml, PnP.PowerShell, CredentialManager -Scope CurrentUser
+Install-Module -Name EPS, powershell-yaml, PnP.PowerShell, CredentialManager -Scope CurrentUser
 ```
 
 ## Usage
