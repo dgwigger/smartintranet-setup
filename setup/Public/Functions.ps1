@@ -78,7 +78,7 @@ function New-SmartIntranet() {
 
     # Set Hub Site
     Write-Output "> SETTING UP AS HUB SITE"
-    Register-PnPHubSite -Site $site.Url -Connection $global:BcAdminConnection
+    Register-PnPHubSite -Site $site.Url -Connection $global:BcAdminConnection -ErrorAction Continue
     Set-PnPHubSite -Identity $site.Url -Title $tenantConfig.SharePoint.PortalTitle -EnablePermissionsSync -HideNameInNavigation -Connection $global:BcAdminConnection
 
     # Provision Content
@@ -100,11 +100,15 @@ function New-SmartIntranet() {
 }
 
 function Set-StandardPermissions($Connection) {
+    $ErrorAction = "Continue"
     Set-PnPGroup -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -Title "SmartIntranet Admins" -OnlyAllowMembersViewMembership $true -Connection $Connection
     Set-PnPGroup -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -Title "SmartIntranet ContentAdmins" -OnlyAllowMembersViewMembership $true -Connection $Connection
     Set-PnPGroup -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -Title "SmartIntranet Users" -OnlyAllowMembersViewMembership $true -Connection $Connection
     
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -AddRole @("Vollzugriff") -Connection $Connection
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -AddRole @("Mitwirken") -Connection $Connection
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -AddRole @("Lesen") -Connection $Connection
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -AddRole @("Vollzugriff") -Connection $Connection -ErrorAction $ErrorAction
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -AddRole @("Full Control") -Connection $Connection -ErrorAction $ErrorAction
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -AddRole @("Mitwirken") -Connection $Connection -ErrorAction $ErrorAction
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -AddRole @("Contribute") -Connection $Connection -ErrorAction $ErrorAction
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -AddRole @("Lesen") -Connection $Connection -ErrorAction $ErrorAction
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -AddRole @("Read") -Connection $Connection -ErrorAction $ErrorAction
 }
