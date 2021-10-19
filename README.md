@@ -20,7 +20,7 @@ Install-Module -Name EPS, powershell-yaml, PnP.PowerShell, CredentialManager -Sc
 ```powershell
 Import-Module .\setup\SmartIntranet.psm1 -Force
 
-$Tenant = "bee365dev" # or your tenant 😉
+$Tenant = "contoso" # or your tenant 😉
 
 # this is only required once in the tenant lifetime, unless the enterpise application gets deleted
 #   use an administration account, that can consent the rights on Azure here
