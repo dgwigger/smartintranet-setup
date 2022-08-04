@@ -31,6 +31,9 @@ New-BcTenantConfig -Tenant $Tenant
 Show-BcTenantConfig -Tenant $Tenant
 
 Install-BcIntranet -Tenant $Tenant # -SkipWebpartDeployment
+
+# OPTIONAL: if you'd like to add another page with a minimal template and company news, the go for it:
+Install-PageMinimalWithNews -Tenant $Tenant
 ```
 
 ## Repository Structure

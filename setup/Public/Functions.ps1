@@ -111,10 +111,26 @@ function Set-StandardPermissions($Connection) {
     Set-PnPGroup -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -Title "SmartIntranet ContentAdmins" -OnlyAllowMembersViewMembership $true -Connection $Connection
     Set-PnPGroup -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -Title "SmartIntranet Users" -OnlyAllowMembersViewMembership $true -Connection $Connection
     
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -AddRole @("Vollzugriff") -Connection $Connection -ErrorAction $ErrorAction
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -AddRole @("Full Control") -Connection $Connection -ErrorAction $ErrorAction
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -AddRole @("Mitwirken") -Connection $Connection -ErrorAction $ErrorAction
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -AddRole @("Contribute") -Connection $Connection -ErrorAction $ErrorAction
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -AddRole @("Lesen") -Connection $Connection -ErrorAction $ErrorAction
-    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -AddRole @("Read") -Connection $Connection -ErrorAction $ErrorAction
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -AddRole @("Vollzugriff") -Connection $Connection -ErrorAction SilentlyContinue
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedOwnerGroup -Connection $Connection) -AddRole @("Full Control") -Connection $Connection -ErrorAction SilentlyContinue
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -AddRole @("Mitwirken") -Connection $Connection -ErrorAction SilentlyContinue
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedMemberGroup -Connection $Connection) -AddRole @("Contribute") -Connection $Connection -ErrorAction SilentlyContinue
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -AddRole @("Lesen") -Connection $Connection -ErrorAction SilentlyContinue
+    Set-PnPGroupPermissions -Identity (Get-PnPGroup -AssociatedVisitorGroup -Connection $Connection) -AddRole @("Read") -Connection $Connection -ErrorAction SilentlyContinue
+}
+
+function Add-PageMinimalWithNews() {
+    Write-Output "> Connecting to beeConnect Site Collection: $($tenantConfig.SharePoint.PortalSite)"
+    $siteUrl = "$($tenantConfig.SharePoint.Url)/$($tenantConfig.SharePoint.PortalSite)"
+    
+    $site = Get-PnPTenantSite -Identity $siteUrl -Connection $global:BcAdminConnection -ErrorAction $ErrorActionPreference
+    $c = Connect-PnPOnline -Credentials $global:BcAdminCred -Url $site.Url -ReturnConnection
+    
+    Write-Output "> Adding Page 'MinimalNews.aspx'"
+    $templatePath = Join-Path -Path $PSScriptRoot -ChildPath "../../templates/Page-MinimalWithNews.xml"
+    Write-Output "> Adding (related) Page 'SearchCenter.aspx'"
+    $templatePath = Join-Path -Path $PSScriptRoot -ChildPath "../../templates/Page-SearchCenter.xml"
+    Invoke-PnPSiteTemplate -Path $templatePath -Connection $c -ErrorAction $ErrorActionPreference
+    
+    Write-Output "> ✅  OK!"
 }
