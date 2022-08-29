@@ -128,6 +128,8 @@ function Add-PageMinimalWithNews() {
     
     Write-Output "> Adding Page 'MinimalNews.aspx'"
     $templatePath = Join-Path -Path $PSScriptRoot -ChildPath "../../templates/Page-MinimalWithNews.xml"
+    Invoke-PnPSiteTemplate -Path $templatePath -Connection $c -ErrorAction $ErrorActionPreference
+    
     Write-Output "> Adding (related) Page 'SearchCenter.aspx'"
     $templatePath = Join-Path -Path $PSScriptRoot -ChildPath "../../templates/Page-SearchCenter.xml"
     Invoke-PnPSiteTemplate -Path $templatePath -Connection $c -ErrorAction $ErrorActionPreference

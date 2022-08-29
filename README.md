@@ -32,7 +32,7 @@ Show-BcTenantConfig -Tenant $Tenant
 
 Install-BcIntranet -Tenant $Tenant # -SkipWebpartDeployment
 
-# OPTIONAL: if you'd like to add another page with a minimal template and company news, the go for it:
+# OPTIONAL: if you'd like to add another page with a minimal template and company news, then go for it:
 Install-PageMinimalWithNews -Tenant $Tenant
 ```
 
