@@ -20,6 +20,7 @@ function Publish-LatestWebpartsToTenant() {
         # Set-PnPTraceLog -On
         Check-TenantAppCatalog
         Add-ArtifactsToTenant
+        Sleep 10
         Grant-ServicePrincipalPermissionsInTenant
     }
     catch {
@@ -33,7 +34,7 @@ function Publish-LatestWebpartsToTenant() {
 function Check-TenantAppCatalog() {
     $appCatalogUrl = Get-PnPTenantAppCatalogUrl -Connection $Global:BcAdminConnection
     if ($appCatalogUrl -eq $null) {
-        throw "Please install Tenant App Catalog first at url: /sites/apps (by selecting the option'Automatically create a new app catalog site')"
+        throw "Please install Tenant App Catalog first at url: '/sites/apps' or 'sites/appcatalog' (by selecting the option'Automatically create a new app catalog site')"
     }
 }
 
@@ -101,7 +102,7 @@ function New-SmartIntranet() {
     Write-Output "> ADJUSTING PERMISSIONS"
     Set-StandardPermissions -Connection $c
         
-    Write-Output "> ✅ DONE! Don't forget to grant API access to the webparts through the SharePoint Admin Center..."
+    Write-Output "> ✅ DONE! Don't forget to check if API access to the webparts (see SharePoint Admin Center) was granted..."
 }
 
 function Set-StandardPermissions($Connection) {
