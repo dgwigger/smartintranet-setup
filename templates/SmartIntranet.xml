@@ -79,7 +79,7 @@
           </pnp:Sections>
         </pnp:ClientSidePage>
       </pnp:ClientSidePages>
-      <pnp:Footer Enabled="true" Name="beeConnect Intranet / SmartIntranet · powered by bee365" RemoveExistingNodes="true">
+      <pnp:Footer Enabled="true" Name="beeConnect Intranet / SmartIntranet · made with ♥︎ by bee365" RemoveExistingNodes="true">
         <pnp:FooterLinks>
           <pnp:FooterLink DisplayName="Lizenz" Url="{site}/Freigegebene Dokumente/Lizenz/bee365 Lizenz.md" />
         </pnp:FooterLinks>
