@@ -89,7 +89,8 @@ function New-SmartIntranet() {
 
     # Provision Content
     Write-Output "> PROVISIONING CONTENT"
-    $c = Connect-PnPOnline -Credentials $global:BcAdminCred -Url $site.Url -ReturnConnection
+    # BEESUPP-441: Change to modern authentication via interactive mode / get current session and authenticate with current creds
+    $c = Connect-PnPOnline -Url $site.Url -Interactive -ReturnConnection
 
     $templatePath = Join-Path -Path $PSScriptRoot -ChildPath "../../templates/SmartIntranet.xml"
     Invoke-PnPSiteTemplate -Path $templatePath -Connection $c -ErrorAction $ErrorActionPreference
@@ -125,7 +126,8 @@ function Add-PageMinimalWithNews() {
     $siteUrl = "$($tenantConfig.SharePoint.Url)/$($tenantConfig.SharePoint.PortalSite)"
     
     $site = Get-PnPTenantSite -Identity $siteUrl -Connection $global:BcAdminConnection -ErrorAction $ErrorActionPreference
-    $c = Connect-PnPOnline -Credentials $global:BcAdminCred -Url $site.Url -ReturnConnection
+    # BEESUPP-441: Change to modern authentication via interactive mode / get current session and authenticate with current creds
+    $c = Connect-PnPOnline -Url $site.Url -Interactive -ReturnConnection
     
     Write-Output "> Adding Page 'MinimalNews.aspx'"
     $templatePath = Join-Path -Path $PSScriptRoot -ChildPath "../../templates/Page-MinimalWithNews.xml"
