@@ -103,7 +103,9 @@ function New-SmartIntranet() {
     Write-Output "> ADJUSTING PERMISSIONS"
     Set-StandardPermissions -Connection $c
         
-    Write-Output "> ✅ DONE! Don't forget to check if API access to the webparts (see SharePoint Admin Center) was granted..."
+    Write-Output "> ✅ DONE! Don't forget to check if API access to the webparts (see SharePoint Admin Center) was granted...`n"
+    Write-Output "👉 IMPORTANT NOTICE 👈"
+    Write-Output "Please report this customer to bee365 (according to the license and installation contract) by transmitting the customers' yml file to: info@bee365.ch"
 }
 
 function Set-StandardPermissions($Connection) {
