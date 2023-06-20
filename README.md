@@ -1,6 +1,6 @@
 # Automated Setup Scripts for smartintranet
 
-## Prerequisites
+## Prerequisites (obsolete when running from docker image)
 
 ```powershell
 Install-Module -Name EPS -Scope CurrentUser
